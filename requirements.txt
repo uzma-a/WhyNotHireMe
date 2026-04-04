@@ -1,23 +1,33 @@
-# WhyNotHireMe — Python dependencies
-# Pin minor versions for reproducibility; patch versions left open.
+# WhyNotHireMe — Production Dependencies
+# Optimized for Railway deployment (smaller image size)
 
 # API framework
 fastapi==0.111.*
 uvicorn[standard]==0.29.*
-python-multipart==0.0.*       # required for FastAPI file uploads
+python-multipart==0.0.*
 
 # PDF parsing
 pdfplumber==0.11.*
-PyMuPDF==1.24.*               # optional fallback; comment out if not needed
 
 # NLP / embeddings
 sentence-transformers==3.0.*
 numpy>=1.26,<2.0
 
-# HuggingFace (AI explanation layer)
+# HuggingFace — CPU only (much smaller than full torch)
 transformers==4.41.*
-torch>=2.2,<3.0               # CPU build is fine; use torch+cu121 for GPU
+
+# Database
+sqlalchemy==2.0.*
+psycopg2-binary==3.1.*
+alembic==1.13.*
+
+# Auth
+python-jose[cryptography]==3.3.*
+bcrypt==4.0.1
+
+# Email
+sendgrid==6.11.*
 
 # Utilities
-python-dotenv==1.0.*          # .env file support
-pydantic==2.7.*               # data validation (FastAPI uses this internally)
+python-dotenv==1.0.*
+pydantic==2.7.*

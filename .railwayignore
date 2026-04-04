@@ -1,0 +1,14 @@
+# Ignore heavy files to keep Railway image under 4GB
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+*.pdf
+uploads/
+whynothireme-frontend/
+.git/
+tests/
+test_api.py
+*.md
