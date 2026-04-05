@@ -1,33 +1,18 @@
-# WhyNotHireMe — Production Dependencies
-# Optimized for Railway deployment (smaller image size)
+# WhyNotHireMe — Dependencies
+# No versions pinned — pip will install latest stable
 
-# API framework
-fastapi==0.111.*
-uvicorn[standard]==0.29.*
-python-multipart==0.0.*
-
-# PDF parsing
-pdfplumber==0.11.*
-
-# NLP / embeddings
-sentence-transformers==3.0.*
-numpy>=1.26,<2.0
-
-# HuggingFace — CPU only (much smaller than full torch)
-transformers==4.41.*
-
-# Database
-sqlalchemy==2.0.*
-psycopg2-binary==3.1.*
-alembic==1.13.*
-
-# Auth
-python-jose[cryptography]==3.3.*
-bcrypt==4.0.1
-
-# Email
-sendgrid==6.11.*
-
-# Utilities
-python-dotenv==1.0.*
-pydantic==2.7.*
+fastapi
+uvicorn[standard]
+python-multipart
+pdfplumber
+sentence-transformers
+numpy
+transformers
+sqlalchemy
+psycopg2-binary
+alembic
+python-jose[cryptography]
+bcrypt
+sendgrid
+python-dotenv
+pydantic
