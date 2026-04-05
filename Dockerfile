@@ -6,24 +6,28 @@ ENV PATH="/home/user/.local/bin:$PATH"
 
 WORKDIR /app
 
-# Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
-# Pin exact compatible versions — tested combination
+# Step 1 — Install numpy first (must be 1.x)
+RUN pip install --no-cache-dir "numpy==1.26.4"
+
+# Step 2 — Install PyTorch CPU (separate index)
+RUN pip install --no-cache-dir "torch==2.1.0" \
+    --index-url https://download.pytorch.org/whl/cpu
+
+# Step 3 — Install transformers + sentence-transformers (PyPI)
 RUN pip install --no-cache-dir \
-    "numpy==1.26.4" \
-    "torch==2.1.0" --index-url https://download.pytorch.org/whl/cpu \
-    "transformers==4.40.0" \
+    "transformers==4.40.2" \
     "sentence-transformers==2.7.0"
 
-# Install rest of dependencies
+# Step 4 — Rest of dependencies
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download NLP model
+# Step 5 — Pre-download NLP model
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
-# Copy app code
+# Copy app
 COPY --chown=user *.py ./
 
 ENV PORT=7860
