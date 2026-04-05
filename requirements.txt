@@ -1,6 +1,4 @@
 # WhyNotHireMe — Dependencies
-# Note: torch, numpy, transformers, sentence-transformers
-# are installed in Dockerfile with pinned versions
 
 fastapi
 uvicorn[standard]
@@ -11,6 +9,7 @@ psycopg2-binary
 alembic
 python-jose[cryptography]
 bcrypt
+passlib[bcrypt]
 sendgrid
 python-dotenv
 pydantic
