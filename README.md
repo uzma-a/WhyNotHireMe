@@ -1,3 +1,12 @@
+---
+title: WhyNotHireMe
+emoji: 🎯
+colorFrom: yellow
+colorTo: green
+sdk: docker
+pinned: false
+---
+
 # WhyNotHireMe 🚀
 
 **AI-Powered Resume Analysis & Hiring Transparency System**
