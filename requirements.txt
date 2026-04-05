@@ -1,13 +1,11 @@
 # WhyNotHireMe — Dependencies
-# No versions pinned — pip will install latest stable
+# Note: torch, numpy, transformers, sentence-transformers
+# are installed in Dockerfile with pinned versions
 
 fastapi
 uvicorn[standard]
 python-multipart
 pdfplumber
-sentence-transformers
-numpy
-transformers
 sqlalchemy
 psycopg2-binary
 alembic

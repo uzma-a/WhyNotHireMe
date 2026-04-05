@@ -1,28 +1,29 @@
 FROM python:3.11-slim
 
-# HuggingFace Spaces requirement
 RUN useradd -m -u 1000 user
 USER user
 ENV PATH="/home/user/.local/bin:$PATH"
 
 WORKDIR /app
 
-# Install system dependencies
+# Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
-# Install PyTorch CPU first — specific compatible version
+# Pin exact compatible versions — tested combination
 RUN pip install --no-cache-dir \
-    torch==2.1.0 \
-    --index-url https://download.pytorch.org/whl/cpu
+    "numpy==1.26.4" \
+    "torch==2.1.0" --index-url https://download.pytorch.org/whl/cpu \
+    "transformers==4.40.0" \
+    "sentence-transformers==2.7.0"
 
-# Install all other dependencies
+# Install rest of dependencies
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Pre-download NLP model
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
-# Copy application code
+# Copy app code
 COPY --chown=user *.py ./
 
 ENV PORT=7860
