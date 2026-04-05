@@ -1,29 +1,33 @@
 FROM python:3.11-slim
 
+# HuggingFace Spaces requirement
+RUN useradd -m -u 1000 user
+USER user
+ENV PATH="/home/user/.local/bin:$PATH"
+
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir --upgrade pip
 
-# Install CPU-only PyTorch first (much smaller — ~800MB vs 2.5GB)
+# Install PyTorch CPU first — specific compatible version
 RUN pip install --no-cache-dir \
-    torch==2.2.2 --index-url https://download.pytorch.org/whl/cpu
+    torch==2.1.0 \
+    --index-url https://download.pytorch.org/whl/cpu
 
-# Copy and install other requirements
-COPY requirements.txt .
+# Install all other dependencies
+COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download the NLP model during build
+# Pre-download NLP model
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
 # Copy application code
-COPY *.py ./
+COPY --chown=user *.py ./
 
-ENV PORT=8000
+ENV PORT=7860
 ENV ENV=production
 
-EXPOSE 8000
+EXPOSE 7860
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "1"]
